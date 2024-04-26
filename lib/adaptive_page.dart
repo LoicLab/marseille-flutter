@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:marseille_flutter/liste_page.dart';
 
 class AdaptivePage extends StatefulWidget{
   final TargetPlatform platform;
+  final Widget page;
 
-  const AdaptivePage({super.key, required this.platform});
+  const AdaptivePage({super.key, required this.platform, required this.page});
 
   @override
   AdaptivePageState createState()=> AdaptivePageState();
@@ -42,7 +42,7 @@ class AdaptivePageState extends State<AdaptivePage>{
   Widget body(){
     return Padding(
         padding: const EdgeInsets.only(top: 8),
-        child: ListePage(platform: widget.platform),
+        child: widget.page,
     );
   }
 }
