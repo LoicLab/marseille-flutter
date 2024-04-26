@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:marseille_flutter/liste_page.dart';
 
 class AdaptivePage extends StatefulWidget{
   final TargetPlatform platform;
@@ -25,18 +26,23 @@ class AdaptivePageState extends State<AdaptivePage>{
   }
 
   AppBar appBar() {
-    return AppBar(title: const Text("Android"));
+    return AppBar(
+        title: const Text("Android"),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+    );
   }
 
   CupertinoNavigationBar navBar() {
-    return CupertinoNavigationBar(middle: const Text("iOS"), backgroundColor: Theme.of(context).colorScheme.onSecondary);
+    return CupertinoNavigationBar(
+        middle: const Text("iOS"),
+        backgroundColor: Theme.of(context).colorScheme.primary
+    );
   }
 
   Widget body(){
-    return const Column(
-      children: [
-        Text('body')
-      ],
+    return Padding(
+        padding: const EdgeInsets.only(top: 8),
+        child: ListePage(platform: widget.platform),
     );
   }
 }

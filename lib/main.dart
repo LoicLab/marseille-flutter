@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //final platform = Theme.of(context).platform;
     //Just for test
-    const platform = TargetPlatform.android;
+    const platform = TargetPlatform.iOS;
     bool isAndroid = (platform == TargetPlatform.android);
     return isAndroid ? androidBase(platform: platform) : iOSBase(platform: platform);
   }
@@ -48,6 +48,7 @@ class MyApp extends StatelessWidget {
       ],
       theme: CupertinoThemeData(
         primaryColor: materialTheme.primaryColor,
+        brightness: materialTheme.brightness
       ),
       home: AdaptivePage(platform: platform)
     );
