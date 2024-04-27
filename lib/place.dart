@@ -1,3 +1,4 @@
+///Lieu d'une ville
 class Place {
  
   String name;

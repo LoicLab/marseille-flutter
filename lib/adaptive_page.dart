@@ -1,11 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+///Classe qui permet de gérer l'affichage des pages suivant si on est sur Android ou IOS
 class AdaptivePage extends StatefulWidget{
   final TargetPlatform platform;
   final Widget page;
+  final String titleBar;
 
-  const AdaptivePage({super.key, required this.platform, required this.page});
+  const AdaptivePage({
+    super.key,
+    required this.platform,
+    required this.page,
+    required this.titleBar
+  });
 
   @override
   AdaptivePageState createState()=> AdaptivePageState();
@@ -27,14 +34,14 @@ class AdaptivePageState extends State<AdaptivePage>{
 
   AppBar appBar() {
     return AppBar(
-        title: const Text("Android"),
+        title: Text(widget.titleBar),
         backgroundColor: Theme.of(context).colorScheme.primary,
     );
   }
 
   CupertinoNavigationBar navBar() {
     return CupertinoNavigationBar(
-        middle: const Text("iOS"),
+        middle: Text(widget.titleBar),
         backgroundColor: Theme.of(context).colorScheme.primary
     );
   }
