@@ -7,7 +7,7 @@ import 'package:marseille_flutter/place_page.dart';
 
 import 'adaptive_page.dart';
 
-///Affichage des informations sous forme de liste ou de grid
+///Liste ou de grid des lieux
 class ListePage extends StatefulWidget{
   final TargetPlatform platform;
 
@@ -19,8 +19,12 @@ class ListePage extends StatefulWidget{
 
 class ListePageState extends State<ListePage>{
 
-  ///Taille du texte pour les grid
-  double gridtextSize = 12;
+  ///Style pour le texte des grids
+  dynamic gridTextStyle = const TextStyle(
+      fontSize: 12,
+      color: Colors.black,
+      fontWeight: FontWeight.bold
+  );
 
   @override
   Widget build(BuildContext context){
@@ -42,7 +46,7 @@ class ListePageState extends State<ListePage>{
           ;
         },
         separatorBuilder: (BuildContext context, int index) {
-          return const Divider(color: Colors.indigoAccent, thickness: 1,);
+          return Divider(color: Theme.of(context).colorScheme.primary, thickness: 1,);
         },
         itemCount: places.length
     );
@@ -57,25 +61,36 @@ class ListePageState extends State<ListePage>{
           place.getFolderPath(),
           width: MediaQuery.of(context).size.width/3,
         ),
-      onTap: () {
-        navigatorToPage(place: place);
-      }
+        onTap: () {
+          navigatorToPage(place: place);
+        }
     );
   }
 
   ///Affichage d'une liste pour Android
   ListTile androidList({required Place place, required int index}){
-     return ListTile(
-       title: Text(place.name),
-       leading: Text(index.toString()),
-       trailing: Image.asset(
-         place.getFolderPath(),
-         width: MediaQuery.of(context).size.width/3,
-       ),
-       onTap: () {
-         navigatorToPage(place: place);
-       }
-     );
+    return ListTile(
+        title: Text(
+            place.name,
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary
+            ),
+        ),
+        leading: Text(
+            index.toString(),
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary
+            )
+        ),
+        trailing: Image.asset(
+          place.getFolderPath(),
+          width: MediaQuery.of(context).size.height/6,
+          fit: BoxFit.cover,
+        ),
+        onTap: () {
+          navigatorToPage(place: place);
+        }
+    );
   }
 
   ///Utilisation des grid pour l'affichage
@@ -88,6 +103,7 @@ class ListePageState extends State<ListePage>{
 
   ///Affichage des grid pour Android
   Widget androidGrid({required List<Place> places}){
+    double radiusCircular = 15;
     return GridView.builder(
       gridDelegate:
       const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
@@ -95,28 +111,35 @@ class ListePageState extends State<ListePage>{
         return Padding(
             padding: const EdgeInsets.all(8),
             child: Card(
-              color: Colors.white,
-              child: Column(
+                shape: RoundedRectangleBorder(
+                    borderRadius:BorderRadius.circular(radiusCircular)
+                ),
+                color: Colors.white,
+                child: Column(
                   children: [
                     InkWell(
-                      child: Image.asset(
-                        places[index].getFolderPath(),
-                        width: MediaQuery.of(context).size.width/4,
-                      ),
-                      onTap: (){
-                        navigatorToPage(place: places[index]);
-                      },
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(radiusCircular),
+                            topRight: Radius.circular(radiusCircular)
+                          ),
+                          child: Image.asset(
+                              places[index].getFolderPath(),
+                              width: MediaQuery.of(context).size.width/4,
+                              height: MediaQuery.of(context).size.height/2.5,
+                              fit: BoxFit.cover
+                          ),
+                        ),
+                        onTap: (){
+                          navigatorToPage(place: places[index]);
+                        }
                     ),
                     Text(
                         places[index].name,
-                        style: TextStyle(
-                            fontSize: gridtextSize,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold
-                        )
+                        style: gridTextStyle
                     )
-                  ]
-              ),
+                  ],
+                )
             )
         );
       },
@@ -136,22 +159,21 @@ class ListePageState extends State<ListePage>{
               onPressed: () {
                 navigatorToPage(place: place);
               },
-              child:  Padding(
-                  padding: const EdgeInsets.only(right: 4, left: 4),
-                  child: Column(
-                    children: [
-                      Image.asset(
-                          place.getFolderPath(),
-                          width: MediaQuery.of(context).size.width/4.3
-                      ),
-                      Text(
+              child: Card(
+                child: Column(
+                  children: [
+                    Image.asset(
+                        place.getFolderPath(),
+                        width: MediaQuery.of(context).size.width/4.3,
+                        height: MediaQuery.of(context).size.height/2.5,
+                        fit: BoxFit.cover
+                    ),
+                    Text(
                         place.name,
-                        style: TextStyle(
-                            fontSize: gridtextSize
-                        ),
-                      )
-                    ],
-                  )
+                        style: gridTextStyle
+                    )
+                  ],
+                ),
               )
           )
       );
@@ -181,7 +203,8 @@ class ListePageState extends State<ListePage>{
         MaterialPageRoute(builder: (BuildContext ctx){
           return AdaptivePage(
               platform: widget.platform,
-              page: PlacePage(place: place)
+              page: PlacePage(place: place),
+              titleBar: place.name,
           );
         })
     );

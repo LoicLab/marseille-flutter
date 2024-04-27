@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:marseille_flutter/place.dart';
 
-///Affiche la description et l'image du lieu
+///Affiche la description et l'image du quartier
 class PlacePage extends StatefulWidget{
   final Place place;
 
@@ -36,9 +36,8 @@ class PlacePageState extends State<PlacePage>{
   }
 
   ///Affiche les informations en lignes
-  SingleChildScrollView rowView(){
-    return SingleChildScrollView(
-        child: Row(
+  Row rowView(){
+    return Row(
             children: [
               Image.asset(
                   widget.place.getFolderPath(),
@@ -47,18 +46,18 @@ class PlacePageState extends State<PlacePage>{
               Container(
                 padding: const EdgeInsets.all(10.0),
                 width: MediaQuery.of(context).size.width/2,
-                child: Column(
-                  children: [
-                    Text(
-                        widget.place.desc,
-                        textAlign: TextAlign.left
-                    )
-                  ],
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text(
+                          widget.place.desc,
+                          textAlign: TextAlign.left
+                      )
+                    ],
+                  ),
                 ),
               )
             ]
-        )
-    );
+        );
   }
-
 }
