@@ -35,7 +35,7 @@ class AdaptivePageState extends State<AdaptivePage>{
   AppBar appBar() {
     return AppBar(
         title: Text(widget.titleBar),
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Theme.of(context).colorScheme.primary
     );
   }
 
