@@ -12,17 +12,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final platform = Theme.of(context).platform;
+    final platform = Theme.of(context).platform;
     //Just for test
-    const platform = TargetPlatform.iOS;
+    //const platform = TargetPlatform.android;
     bool isAndroid = (platform == TargetPlatform.android);
     return isAndroid ? androidBase(platform: platform) : iOSBase(platform: platform);
   }
-  ///Défini le thème
+  ///Défini le thème clair
   final ThemeData materialTheme = ThemeData.light().copyWith(
         colorScheme: const ColorScheme.light(
-          primary: Colors.deepOrange,
-            secondary: Colors.black
+          primary: Colors.deepPurple,
+          secondary: Colors.black
         )
   );
 
@@ -61,8 +61,7 @@ class MyApp extends StatelessWidget {
         DefaultWidgetsLocalizations.delegate
       ],
       theme: CupertinoThemeData(
-        primaryColor: materialTheme.primaryColor,
-        brightness: materialTheme.brightness
+        primaryColor: materialTheme.primaryColor
       ),
       home: AdaptivePage(
           platform: platform,
